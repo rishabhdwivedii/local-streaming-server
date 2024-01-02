@@ -18,7 +18,7 @@ const Videos = mongoose.model("Videos", videosSchema);
 
 mongoose.connect(
   "mongodb+srv://rishabh14121999:rishabh@cluster0.y9lndvq.mongodb.net/videos",
-  { useNewUrlParser: true, useUnifiedTopology: true, dbName: "videos" }
+  { useNewUrlParser: true, useUnifiedTopology: true, dbName: "videos", serverSelectionTimeoutMS: 5000 }
 );
 
 app.get("/api/videos", async (req, res) => {
@@ -33,7 +33,7 @@ app.get("/api/videos", async (req, res) => {
 
 app.get("/:videoName", (req, res) => {
   const videoName = req.params.videoName;
-  const videoPath = `videos/${videoName}`;
+  const videoPath = path.join(__dirname, "videos", videoName);
   res.sendFile(videoPath, { root: __dirname });
 });
 
